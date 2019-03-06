@@ -3,11 +3,11 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-
-const index = require('./routes/index');
-
+const router = require('./routes/index');
 const mongoose = require('mongoose');
-const url = "mongodb://agomez314:wolfrayet1905@ds259325.mlab.com:59325/contact-list" || 'mongodb://localhost:27017/test'
+require('dotenv')
+
+const url = process.env.MONGODB_URL || 'mongodb://localhost:27017/test'
 mongoose.connect(url, {
   useNewUrlParser: true
 });
@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/', router);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
