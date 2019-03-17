@@ -5,6 +5,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const router = require('./routes/index');
 const mongoose = require('mongoose');
+const validations = require('./utils/validations')
 require('dotenv')
 
 const url = process.env.MONGODB_URL || 'mongodb://localhost:27017/test'
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(validations);
 app.use('/', router);
 
 // catch 404 and forward to error handler

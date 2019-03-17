@@ -1,8 +1,14 @@
 const express = require('express');
+const Pizzas = require('../models/Pizzas')
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.send('toppings api')
+    Pizzas.find({}, (err, docs) => {
+            if (err) throw err;
+            res.status(200).json(docs)
+        })
+        .limit(res.locals.limit)
 })
 
 module.exports = router

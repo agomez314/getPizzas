@@ -3,18 +3,11 @@ const Pizzas = require('../models/Pizzas')
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  let limit = new Number(req.query.limit);
-  if (!limit) {
-    limit = 1;
-  }
-  if (limit > 100) {
-    res.send('Requested too many records. You can request up to 100 pizza orders')
-  }
   Pizzas.find({}, (err, docs) => {
       if (err) throw err;
       res.status(200).json(docs)
     })
-    .limit(limit)
+    .limit(res.locals.limit)
 })
 
 router.post('/', (req, res) => {
